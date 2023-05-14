@@ -2,19 +2,17 @@ version 1.0
 
 
 
-workflow umi_collapse_WF {
+workflow umicollapse_WF {
   input {
-        String sample_name = "UMIcollapse"
+        String sample_name = "UMICollapse"
+        File fastq_read_1
+        File? fastq_read_2
         Int umi_len
         Int umi_skip
         String umi_loc      #location of umi - read1, read2 or per_read
-        File fastq_read_1
-        File? fastq_read_2
         String read_structure
-
         File bwa_index
         File ref_file
-
         String docker_image = "dx://file-GPQZF980Pf0b6YxGxq9ZKBQ7"
   }
     call umicollapse_fastp_umi_extract{
@@ -39,7 +37,7 @@ workflow umi_collapse_WF {
   }
 
 
-    call umi_collapse_final {
+    call umicollapse_final {
         input: precollapsed_bam = umicollapse_bwa_mem.out_bam,
                 sample_name = sample_name,
                 docker_image = docker_image,
@@ -50,8 +48,8 @@ workflow umi_collapse_WF {
 
 
   output {
-    File final_output_bam = umi_collapse_final.out_bam
-    File final_output_bai = umi_collapse_final.out_bai
+    File final_output_bam = umicollapse_final.out_bam
+    File final_output_bai = umicollapse_final.out_bai
   }
 }
 
@@ -164,7 +162,7 @@ task umicollapse_bwa_mem{
 }
 
 
-task umi_collapse_final {
+task umicollapse_final {
     input {
         File precollapsed_bam
         File precollapsed_bai

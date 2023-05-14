@@ -4,23 +4,22 @@ version 1.0
 
 workflow umitools_WF {
   input {
+        String sample_name = "umi_tools"
         File input_fastq_r1
         File? input_fastq_r2
-
         String bc_pattern       
         String? bc_pattern2
         String output_read1 = "extracted_R1.fastq.gz"
         String? output_read2
-        String docker_image = "dx://file-GPqXBQQ0Pf0Xb3fz27f5JFPz"
-        File ref_file
-        File ref_index_bwa
-        String sample_name = "umi_tools"
+        
         String seq_platform = "ILLUMINA"
         Array[String]id = ["0","umi_tools"]
         Array[Int] pi = [0]
-
         String stats_prefix = "deduplicated_stats"
-        
+
+        File ref_file
+        File ref_index_bwa
+        String docker_image = "dx://file-GPqXBQQ0Pf0Xb3fz27f5JFPz"
   }
 
     call umi_tools_extract {
