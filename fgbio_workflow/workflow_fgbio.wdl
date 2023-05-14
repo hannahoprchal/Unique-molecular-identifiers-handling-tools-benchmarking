@@ -3,15 +3,14 @@ version 1.0
 
 workflow fgbio_WF {
     input {
+        String sample_name = "fgbio"
         File fastq_r1
         File? fastq_r2
+        String read_structure
+        String library = "ILLUMINA"
         File ref_bwa_index
         File ref_fa
         File ref_dict
-
-        String read_structure
-        String sample_name = "fgbio"
-        String library = "ILLUMINA"
         String docker_image = "dx://file-GPFjqk80Pf0zjzQB73xvB0qy"
     }
 
