@@ -1,16 +1,17 @@
 version 1.0
 
-task fgbio_create_ref_dict {
+task create_ref_dict {
     input {
         File ref_file
-        String docker_image = "dx://file-GPjVKVQ0Pf0bGpVF5bQfVGP3"
+	String dict_name
+        String docker_image
     
     }
 
     command <<<
         java -jar $PICARD CreateSequenceDictionary \ 
             -R ~{ref_file} \ 
-            -O reference.dict
+            -O ~{dict_name}.dict
 
     >>>
 
@@ -20,7 +21,7 @@ task fgbio_create_ref_dict {
 
 
     output {
-        File ref_dict = "reference.dict"
+        File ref_dict = "~{dict_name}.dict"
     }
 
 }
